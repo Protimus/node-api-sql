@@ -4,6 +4,10 @@ module.exports = {
   PASSWORD: "123456",
   DB: "api",
   dialect: "mysql",
+  dialectOptions: {
+    useUTC: false
+  },
+  timezone: 'America/Sao_Paulo',
   pool: {
     max: 5,
     min: 0,
