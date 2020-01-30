@@ -5,10 +5,13 @@ var jwt = require('jwt-simple'),
 config = require('config');
 
 var auth = function(request, response, next){
-    var token = request.query.token;
+    var token = request.query.token || request.headers['x-access-token'];
     if(!token){
         var err = new Error('Forbidden');
-        err.status = 403;
+        response.send({
+            message:
+              err.message
+          });
         return next(err);
     }
     try {
@@ -16,7 +19,10 @@ var auth = function(request, response, next){
         var isExpired = moment(decoded.exp).isBefore(new Date());
         if(isExpired){
             var err = new Error('Unauthorized');
-            err.status = 401;
+            response.send({
+                message:
+                    err.message
+            });
             return next(err);
         } else {
             request.user = decoded.user;
