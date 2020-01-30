@@ -2,7 +2,8 @@ var express = require('express');
 var user = require("../controllers/user.controller.js");
 var router = express.Router();
 var jwt = require('jwt-simple'),
-config = require('config');
+config = require('config'),
+moment = require('moment');
 
 var auth = function(request, response, next){
     var token = request.query.token || request.headers['x-access-token'];
