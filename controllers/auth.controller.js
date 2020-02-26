@@ -13,6 +13,7 @@ exports.signup = (req, res) => {
   User.create({
     name: req.body.name,
     email: req.body.email,
+    state: req.body.state,
     password: bcrypt.hashSync(req.body.password, 8)
   })
     .then(user => {
@@ -56,6 +57,13 @@ exports.signin = (req, res) => {
         user.password
       );
 
+      if(user.state == 1){
+        return res.status(401).send({
+          accessToken: null,
+          message: "User blocked!"
+        });
+      }
+
       if (!passwordIsValid) {
         return res.status(401).send({
           accessToken: null,
@@ -76,6 +84,7 @@ exports.signin = (req, res) => {
           id: user.id,
           name: user.name,
           email: user.email,
+          state: user.state,
           roles: authorities,
           accessToken: token
         });
