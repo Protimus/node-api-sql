@@ -10,12 +10,14 @@ var cors = require("cors");
 var app = express();
 
 var db = require('./models');
-db.sequelize.sync();
+const Role = db.role;
 
 // cors origin enabled
 var corsOptions = {
   origin: "http://localhost:3000"
 };
+
+db.sequelize.sync();
 
 app.use(cors(corsOptions));
 
