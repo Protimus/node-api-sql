@@ -17,7 +17,7 @@ exports.signup = (req, res) => {
     password: bcrypt.hashSync(req.body.password, 8)
   })
     .then(user => {
-      if (req.body.roles) {
+      /*if (req.body.roles) {
         Role.findAll({
           where: {
             name: {
@@ -33,6 +33,20 @@ exports.signup = (req, res) => {
         // user role = 1
         user.setRoles([1]).then(() => {
           res.send({ message: "User was registered successfully!" });
+        });
+      }*/
+      if (req.body.roles) {
+        Role.findAll({
+          where: {
+            name: {
+              [Op.or]: req.body.roles
+            }
+          }
+        }).then(roles => {
+          // user role = 1
+          user.setRoles([1]).then(() => {
+            res.send({ message: "User was registered successfully!" });
+          });
         });
       }
     })
