@@ -35,7 +35,7 @@ exports.signup = (req, res) => {
     });
 };
 
-exports.sigin = (req, res) => {
+exports.login = (req, res) => {
   User.findOne({
     where: {
       name: req.body.name
