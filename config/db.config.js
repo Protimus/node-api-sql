@@ -1,7 +1,7 @@
 module.exports = {
   HOST: "localhost",
   USER: "root",
-  PASSWORD: "vertrigo",
+  PASSWORD: "123456",
   DB: "api",
   dialect: "mysql",
   timezone: '-03:00',
