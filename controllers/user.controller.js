@@ -1,6 +1,9 @@
 const db = require("../models");
 const User = db.user;
+const Role = db.role;
 const Op = db.Sequelize.Op;
+
+var bcrypt = require("bcryptjs");
 
 // Create and Save a new user.
 exports.create = (req, res) => {
@@ -15,13 +18,31 @@ exports.create = (req, res) => {
   // Create a User
   const user = {
     name: req.body.name,
-    password: req.body.password,
+    password: bcrypt.hashSync(req.body.password, 8),
     email: req.body.email,
     state: req.body.state ? req.body.state : false,
   };
 
   // Save User in the database
   User.create(user).then(data => {
+      if (req.body.roles) {
+        Role.findAll({
+          where: {
+            name: {
+              [Op.or]: req.body.roles
+            }
+          }
+        }).then(roles => {
+          data.setRoles(roles).then(() => {
+            res.send({ message: "User was registered successfully!" });
+          });
+        });
+      } else {
+        // user role = 1
+        data.setRoles([1]).then(() => {
+          res.send({ message: "User was registered successfully!" });
+        });
+      }
     res.send(data);
   }).catch(err => {
     res.status(500).send({
