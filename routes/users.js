@@ -15,21 +15,21 @@ router.use(function(req, res, next) {
 router.post("/", [authJwt.verifyToken, authJwt.isAdmin], user.create);
 
 // Retrieve all users
-router.get("/", [authJwt.verifyToken], user.findAll);
+router.get("/", [authJwt.verifyToken, authJwt.isAdmin], user.findAll);
 
 // Retrieve all active users
-router.get("/active", [authJwt.verifyToken], user.findAllActive);
+router.get("/active", [authJwt.verifyToken, authJwt.isAdmin], user.findAllActive);
 
 // Retrieve a single user with id
-router.get("/:id", [authJwt.verifyToken], user.findOne);
+router.get("/:id", [authJwt.verifyToken, authJwt.isAdmin], user.findOne);
 
 // Update a user with id
-router.put("/:id", [authJwt.verifyToken], user.update);
+router.put("/:id", [authJwt.verifyToken, authJwt.isAdmin], user.update);
 
 // Delete a user with id
-router.delete("/:id", [authJwt.verifyToken], user.delete);
+router.delete("/:id", [authJwt.verifyToken, authJwt.isAdmin], user.delete);
 
 // Delete all users
-router.delete("/", [authJwt.verifyToken], user.deleteAll);
+router.delete("/", [authJwt.verifyToken, authJwt.isAdmin], user.deleteAll);
 
 module.exports = router;
