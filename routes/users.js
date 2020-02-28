@@ -4,12 +4,12 @@ const { authJwt } = require('../middlewares');
 var router = express.Router();
 
 router.use(function(req, res, next) {
-    res.header(
-      "Access-Control-Allow-Headers",
-      "x-access-token, Origin, Content-Type, Accept"
-    );
-    next();
-  });
+  res.header(
+    "Access-Control-Allow-Headers",
+    "x-access-token, Origin, Content-Type, Accept"
+  );
+  next();
+});
 
 // Create a new user
 router.post("/", [authJwt.verifyToken, authJwt.isAdmin], user.create);

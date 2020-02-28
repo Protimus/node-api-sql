@@ -9,6 +9,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "@paypal/checkout-server-sdk": "^1.0.2",
     "bcrypt": "^3.0.7",
     "bcryptjs": "^2.4.3",
     "config": "^3.2.5",
